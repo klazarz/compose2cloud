@@ -49,14 +49,12 @@ services:
     build:
       context: .
       dockerfile: dockerfiledemo
-    pull_policy: always
+    pull_policy: never
+    image: localhost/composescript_demo
     container_name: demo
     volumes:
       - "./app:/app:Z"
     ports:
       - "5000:5000"
-    depends_on:
-      database:
-        condition: service_healthy
     stdin_open: true
     tty: true

@@ -19,7 +19,9 @@ RUN pip install --upgrade pip
 COPY ./app/requirements.txt /app/
 
 # Install dependencies
-RUN pip install --no-cache-dir -r /app/requirements.txt
+#RUN pip install --no-cache-dir -r /app/requirements.txt
+
+RUN pip3.11 install streamlit oracledb pymongo dotenv oci networkx fpdf matplotlib oracle-graph-client PyPDF2
 
 # Copy application files
 COPY ./app/. /app/
@@ -29,5 +31,5 @@ EXPOSE 8182
 EXPOSE 5000
 
 # Define entrypoint (if applicable)
-CMD ["streamlit", "run", "1-introduction.py", "--server.port=5000", "--server.address=0.0.0.0"]
-
+#CMD ["streamlit", "run", "1-introduction.py", "--server.port=5000", "--server.address=0.0.0.0"]
+CMD ["tail", "-f", "/dev/null"]
