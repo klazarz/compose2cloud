@@ -26,6 +26,15 @@ sudo dnf install -y container-tools sqlcl jdk21 wget git podman-compose
 #git clone the compose sources to be added
 git clone https://github.com/klazarz/compose2cloud.git
 
+mkdir -p compose2cloud/composescript/oradata
+
+chmod 777 compose2cloud/composescript/oradata/
+chmod 777 compose2cloud/composescript/ords_secrets/
+chmod 777 compose2cloud/composescript/ords_config/
+chmod 777 compose2cloud/composescript/app/
+chmod 777 compose2cloud/composescript/model/
+
+podman-compose -f compose2cloud/composescript/compose.yml up 
 
 
 
