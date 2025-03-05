@@ -12,11 +12,11 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 RUN /app/venv/bin/pip install --upgrade pip
 
-COPY ./demoapp/requirements.txt .
+COPY ./app/requirements.txt .
 
 RUN /app/venv/bin/pip install --no-cache-dir -r requirements.txt
 
-COPY ./demoapp/. .
+#COPY ./app/. .
 
 EXPOSE 8182
 

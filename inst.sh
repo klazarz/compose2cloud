@@ -14,10 +14,16 @@ sudo iptables-save
 sudo /usr/libexec/oci-growfs -y
 
 #podman and utensils - https://docs.oracle.com/en/operating-systems/oracle-linux/podman/podman-InstallingPodmanandRelatedUtilities.html
-sudo dnf install -y container-tools sqlcl jdk21 wget git
+sudo dnf install -y container-tools sqlcl jdk21 wget git podman-compose 
+# sudo dnf install -y oracle-epel-release-el9
+# sudo dnf config-manager --enable ol9_developer_EPEL
+
+
+
 
 #git clone the compose sources to be added
-git clone git@github.com:klazarz/compose2cloud.git
+git clone https://github.com/klazarz/compose2cloud.git
+
 
 
 

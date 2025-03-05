@@ -1,0 +1,15 @@
+Flask
+oracledb
+pymongo
+oci
+streamlit
+oci
+python-dotenv
+pandas
+network
+matplotlib
+scipy
+PyPDF2
+fpdf
+oracle-graph-client
+networkx
