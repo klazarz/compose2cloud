@@ -1,4 +1,4 @@
-FROM ollama/ollama
+FROM docker.io/ollama/ollama:latest
 
 COPY ./model/pull_ollama.sh /pull_ollama.sh
 
