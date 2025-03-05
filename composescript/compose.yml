@@ -45,19 +45,18 @@ services:
     volumes:
       - "./jl_config:/home/oracle/.jupyter:Z"
     restart: always
-  demo:
-    build:
-      context: .
-      dockerfile: dockerfiledemo
-    pull_policy: always
-    container_name: demo
-    volumes:
-      - "./app:/app:Z"
-    ports:
-      - "8182:8182"
-    depends_on:
-      database:
-        condition: service_healthy
-    stdin_open: true
-    tty: true
-    entrypoint: [ "/app/check_ora23ai.sh" ]
+demo:
+  build:
+    context: .
+    dockerfile: dockerfiledemo
+  pull_policy: always
+  container_name: demo
+  volumes:
+    - "./app:/app:Z"
+  ports:
+    - "5000:5000"
+  depends_on:
+    database:
+      condition: service_healthy
+  stdin_open: true
+  tty: true

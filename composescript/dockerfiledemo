@@ -1,22 +1,33 @@
-# I am using the instantclient image from gcr
-#it comes sql plus which i use to check availability of the db
+# Use Oracle Linux 9 as the base image
 FROM container-registry.oracle.com/os/oraclelinux:9
 
+# Install necessary dependencies
 RUN dnf install -y unzip vim wget curl python3.11 java-17-openjdk python3.11-requests python3.11-pip
 
+# Set working directory
 WORKDIR /app
 
+# Set up a virtual environment
 ENV VIRTUAL_ENV=/app/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-RUN /app/venv/bin/pip install --upgrade pip
+# Upgrade pip
+RUN pip install --upgrade pip
 
-COPY ./app/requirements.txt .
+# Copy requirements first to optimize caching
+COPY ./app/requirements.txt /app/
 
-RUN /app/venv/bin/pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-#COPY ./app/. .
+# Copy application files
+COPY ./app/. /app/
 
+# Expose ports
 EXPOSE 8182
+EXPOSE 5000
+
+# Define entrypoint (if applicable)
+CMD ["streamlit", "run", "1-introduction.py", "--server.port=5000", "--server.address=0.0.0.0"]
 

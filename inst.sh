@@ -9,6 +9,8 @@ sudo dnf update -y
 
 sudo iptables -F
 sudo iptables-save
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
 
 #expand boot volume (https://docs.oracle.com/en-us/iaas/oracle-linux/oci-utils/index.htm#oci-growfs)
 sudo /usr/libexec/oci-growfs -y
