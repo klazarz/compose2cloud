@@ -31,7 +31,8 @@ services:
       context: .
       dockerfile: dockerfileollama
     volumes:
-      - " ./compose2cloud/composescript/model:/root/.ollama"
+      # - " ./compose2cloud/composescript/model:/root/.ollama"
+      - model_storage:/root/.ollama
     ports:
       - "11434:11434"
     restart: always
@@ -61,3 +62,7 @@ services:
   #   stdin_open: true
   #   tty: true
   #   entrypoint: [ "/app/check_ora23ai.sh" ]
+
+  volumes:
+    model_storage:
+    driver: local
