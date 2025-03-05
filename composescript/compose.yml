@@ -1,30 +1,30 @@
 services:
-  # database:
-  #   container_name: 23ai
-  #   image: container-registry.oracle.com/database/free:latest
-  #   environment:
-  #     - ORACLE_PWD=Welcome23ai
-  #     - ENABLE_ARCHIVELOG=false
-  #     - ENABLE_FORCE_LOGGING=false
-  #   ports:
-  #     - "1521:1521"
-  #   # volumes:
-  #   #   - "./oradata/:/opt/oracle/oradata"
-  #   #   - "./sql/startup/:/opt/oracle/scripts/startup"
-  #   restart: always
-  # ords:
-  #   container_name: ords
-  #   image: container-registry.oracle.com/database/ords-developer:latest
-  #   ports:
-  #     - "8181:8181"
-  #     - "27017:27017"
-  #   volumes:
-  #     - "./ords_secrets:/opt/oracle/variables"
-  #     - "./ords_config/:/etc/ords/config/"
-  #   depends_on:
-  #     database:
-  #       condition: service_healthy
-  #   restart: always
+  database:
+    container_name: 23ai
+    image: container-registry.oracle.com/database/free:latest
+    environment:
+      - ORACLE_PWD=Welcome23ai
+      - ENABLE_ARCHIVELOG=false
+      - ENABLE_FORCE_LOGGING=false
+    ports:
+      - "1521:1521"
+    # volumes:
+    #   - "./oradata/:/opt/oracle/oradata"
+    #   - "./sql/startup/:/opt/oracle/scripts/startup"
+    restart: always
+  ords:
+    container_name: ords
+    image: container-registry.oracle.com/database/ords-developer:latest
+    ports:
+      - "8181:8181"
+      - "27017:27017"
+    volumes:
+      - "./ords_secrets:/opt/oracle/variables:Z"
+      - "./ords_config/:/etc/ords/config/:Z"
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: always
   ollama:
     container_name: ollama
     build:
@@ -35,29 +35,29 @@ services:
     ports:
       - "11434:11434"
     restart: always
-  # jupyterlab:
-  #   build:
-  #     context: .
-  #     dockerfile: dockerjupyter
-  #   container_name: jupyterlab
-  #   ports:
-  #     - "8888:8888"
-  #   volumes:
-  #     - ./jl_config:/home/oracle/.jupyter
-  #   restart: always
-  # demo:
-  #   build:
-  #     context: .
-  #     dockerfile: dockerfiledemo
-  #   pull_policy: always
-  #   container_name: demo
-  #   volumes:
-  #     - "./app:/app"
-  #   ports:
-  #     - "8182:8182"
-  #   depends_on:
-  #     database:
-  #       condition: service_healthy
-  #   stdin_open: true
-  #   tty: true
-  #   entrypoint: [ "/app/check_ora23ai.sh" ]
+  jupyterlab:
+    build:
+      context: .
+      dockerfile: dockerjupyter
+    container_name: jupyterlab
+    ports:
+      - "8888:8888"
+    volumes:
+      - "./jl_config:/home/oracle/.jupyter:Z"
+    restart: always
+  demo:
+    build:
+      context: .
+      dockerfile: dockerfiledemo
+    pull_policy: always
+    container_name: demo
+    volumes:
+      - "./app:/app:Z"
+    ports:
+      - "8182:8182"
+    depends_on:
+      database:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    entrypoint: [ "/app/check_ora23ai.sh" ]
