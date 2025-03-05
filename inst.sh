@@ -17,7 +17,7 @@ sudo /usr/libexec/oci-growfs -y
 sudo dnf install -y container-tools sqlcl jdk21 wget git
 
 #git clone the compose sources to be added
-
+git clone git@github.com:klazarz/compose2cloud.git
 
 
 
