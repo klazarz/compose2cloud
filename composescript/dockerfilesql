@@ -1,0 +1,10 @@
+# SQLcl
+FROM container-registry.oracle.com/database/sqlcl:latest
+
+RUN yum install -y unzip vim wget curl
+
+WORKDIR /scripts
+
+COPY ./sql/. .
+
+

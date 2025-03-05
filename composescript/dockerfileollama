@@ -1,0 +1,9 @@
+FROM ollama/ollama
+
+COPY ./model/pull_ollama.sh /pull_ollama.sh
+
+# Ensure the script is executable
+RUN chmod +x /pull_ollama.sh
+
+EXPOSE 11434
+ENTRYPOINT ["/bin/sh", "/pull_ollama.sh"]

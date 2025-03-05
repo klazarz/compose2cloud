@@ -1,0 +1,22 @@
+# I am using the instantclient image from gcr
+#it comes sql plus which i use to check availability of the db
+FROM container-registry.oracle.com/os/oraclelinux:9
+
+RUN dnf install -y unzip vim wget curl python3.11 java-17-openjdk python3.11-requests python3.11-pip
+
+WORKDIR /app
+
+ENV VIRTUAL_ENV=/app/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+RUN /app/venv/bin/pip install --upgrade pip
+
+COPY ./demoapp/requirements.txt .
+
+RUN /app/venv/bin/pip install --no-cache-dir -r requirements.txt
+
+COPY ./demoapp/. .
+
+EXPOSE 8182
+

@@ -1,0 +1,1 @@
+CONN_STRING=SYS/Welcome23ai@23ai:1521/freepdb1
