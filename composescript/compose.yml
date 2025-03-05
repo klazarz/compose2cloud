@@ -8,8 +8,8 @@ services:
       - ENABLE_FORCE_LOGGING=false
     ports:
       - "1521:1521"
-    # volumes:
-    #   - "./oradata/:/opt/oracle/oradata"
+    volumes:
+      - "./oradata/:/opt/oracle/oradata:Z"
     #   - "./sql/startup/:/opt/oracle/scripts/startup"
     restart: always
   ords:
@@ -45,18 +45,18 @@ services:
     volumes:
       - "./jl_config:/home/oracle/.jupyter:Z"
     restart: always
-demo:
-  build:
-    context: .
-    dockerfile: dockerfiledemo
-  pull_policy: always
-  container_name: demo
-  volumes:
-    - "./app:/app:Z"
-  ports:
-    - "5000:5000"
-  depends_on:
-    database:
-      condition: service_healthy
-  stdin_open: true
-  tty: true
+  demo:
+    build:
+      context: .
+      dockerfile: dockerfiledemo
+    pull_policy: always
+    container_name: demo
+    volumes:
+      - "./app:/app:Z"
+    ports:
+      - "5000:5000"
+    depends_on:
+      database:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
