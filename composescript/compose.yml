@@ -31,7 +31,7 @@ services:
       context: .
       dockerfile: dockerfileollama
     volumes:
-      - " /home/opc/compose2cloud/composescript/model:/root/.ollama"
+      - " ./compose2cloud/composescript/model:/root/.ollama"
     ports:
       - "11434:11434"
     restart: always
