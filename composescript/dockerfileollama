@@ -1,6 +1,6 @@
 FROM ollama/ollama
 
-COPY .compose2cloud/composescript/model/pull_ollama.sh /pull_ollama.sh
+COPY ./compose2cloud/composescript/model/pull_ollama.sh /pull_ollama.sh
 
 # Ensure the script is executable
 RUN chmod +x /pull_ollama.sh
