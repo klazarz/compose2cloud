@@ -31,8 +31,12 @@ RUN curl -L -o /tmp/sqlcl-latest.zip https://download.oracle.com/otn_software/ja
     unzip /tmp/sqlcl-latest.zip -d /home/oracle/.local/. && \
     rm -f /tmp/sqlcl-latest.zip
 
+RUN mkdir -p /home/oracle/.jupyter/
+COPY --chown=oracle:oinstall jl_config/ /home/oracle/.jupyter/
+
 # Expose port 8888 for JupyterLab
 EXPOSE 8888
 
 # Run JupyterLab (use full path)
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''"]
+#CMD ["jupyter", "lab"]

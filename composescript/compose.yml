@@ -44,8 +44,8 @@ services:
     pull_policy: never
     ports:
       - "8888:8888"
-    volumes:
-      - "./jl_config:/home/oracle/.jupyter:Z"
+    # volumes:
+    #   - "./jl_config:/home/oracle/.jupyter:Z"
     restart: always
   demo:
     build:
