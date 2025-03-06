@@ -1,4 +1,4 @@
-FROM container-registry.oracle.com/os/oraclelinux:8
+FROM container-registry.oracle.com/os/oraclelinux:9
 
 # Set environment variables
 ENV JUPYTER_CONFIG_DIR=/home/oracle/.jupyter \
@@ -6,26 +6,33 @@ ENV JUPYTER_CONFIG_DIR=/home/oracle/.jupyter \
     NB_UID=1000 \
     NB_GID=1000 \
     HOME=/home/oracle \
-    PATH="/home/oracle/.local/bin:$PATH"  
-# Ensure Jupyter is in PATH
+    PATH="/home/oracle/.local/bin:/home/oracle/.local/sqlcl/bin:$PATH"  
 
 # Install system dependencies
-RUN dnf module enable nodejs:20 -y 
-RUN dnf -y install git nodejs wget python3.12 python3.12-requests python3.12-pip java-21-openjdk python3.12-setuptools python3.12-wheel \
+RUN dnf update -y && \
+    dnf module enable nodejs:20 -y && \
+    dnf -y install oracle-epel-release-el9 git nodejs wget python3.12 python3.12-requests python3.12-pip python3.12-setuptools python3.12-wheel \
     libffi-devel openssl openssl-devel tk-devel sudo xz-devel zlib-devel bzip2-devel readline-devel libuuid-devel ncurses-devel \
-    libaio oracle-database-preinstall-23ai && \
+    libaio oracle-database-preinstall-23ai java-21-openjdk && \
     dnf clean all
+
+# Install SQLcl
+
 
 # Switch to the new user
 USER $NB_USER
 WORKDIR /home/$NB_USER
 
+
 # Install JupyterLab and dependencies using the correct Python version
 RUN python3.12 -m pip install --no-cache-dir --user jupyterlab
+
+RUN curl -L -o /tmp/sqlcl-latest.zip https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip && \
+    unzip /tmp/sqlcl-latest.zip -d /home/oracle/.local/. && \
+    rm -f /tmp/sqlcl-latest.zip
 
 # Expose port 8888 for JupyterLab
 EXPOSE 8888
 
 # Run JupyterLab (use full path)
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''"]
-

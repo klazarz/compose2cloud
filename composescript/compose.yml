@@ -40,6 +40,8 @@ services:
       context: .
       dockerfile: dockerjupyter
     container_name: jupyterlab
+    image: localhost/composescript_jupyterlab
+    pull_policy: never
     ports:
       - "8888:8888"
     volumes:

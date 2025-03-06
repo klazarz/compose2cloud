@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source init/variable.sh
 
 #######
 #######    S T A R T      S C R I P T    ######
@@ -7,10 +8,18 @@
 
 sudo dnf update -y
 
-sudo iptables -F
-sudo iptables-save
-sudo systemctl stop firewalld
-sudo systemctl disable firewalld
+sudo firewall-cmd --permanent --add-port=1521/tcp #Database
+sudo firewall-cmd --permanent --add-port=1522/tcp #Database
+sudo firewall-cmd --permanent --add-port=8888/tcp #JupyterLabs
+sudo firewall-cmd --permanent --add-port=8181/tcp #ORDS
+sudo firewall-cmd --permanent --add-port=8501/tcp #Streamlit
+sudo firewall-cmd --permanent --add-port=5000/tcp #Flask
+sudo firewall-cmd --permanent --add-port=5500/tcp #EM
+sudo firewall-cmd --permanent --add-port=5501/tcp #EM
+sudo firewall-cmd --permanent --add-port=7000/tcp #Django
+sudo firewall-cmd --permanent --add-port=27017/tcp #Mongo
+sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" destination address="10.0.0.0/24" service name="ssh" accept'
+sudo firewall-cmd --reload
 
 #expand boot volume (https://docs.oracle.com/en-us/iaas/oracle-linux/oci-utils/index.htm#oci-growfs)
 sudo /usr/libexec/oci-growfs -y
