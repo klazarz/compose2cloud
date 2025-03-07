@@ -1,12 +1,10 @@
 #!/bin/bash
 
-
-
 #######    S T A R T      S C R I P T    ######
 #######   (this is for Oracle Linux 9)   ######
 
 ## load variables (scripts, passwords, etc)
-source init/variable.sh
+source /home/opc/compose2cloud/init/variable.sh
 
 ## update
 sudo dnf update -y
@@ -34,7 +32,7 @@ sudo dnf install -y container-tools sqlcl jdk21 wget git podman-compose
 #git clone the compose sources to be added
 git clone https://github.com/klazarz/compose2cloud.git
 
-mkdir -p /home/ops/compose2cloud/composescript/oradata
+mkdir -p /home/opc/compose2cloud/composescript/oradata
 
 chmod 777 /home/opc/compose2cloud/composescript/oradata/
 chmod 777 /home/opc/compose2cloud/composescript/ords_secrets/
@@ -42,8 +40,15 @@ chmod 777 /home/opc/compose2cloud/composescript/ords_config/
 chmod 777 /home/opc/compose2cloud/composescript/app/
 chmod 777 /home/opc/compose2cloud/composescript/model/
 
+
+#we use this variable to store the initial password - it will be updated with the new password after alter-pwd.service runs
+echo $vncpwdinit | tee /home/opc/compose2cloud/composescript/envvar/.vncpwdinit > /dev/null
+echo vncpwdinit=$(cat /home/opc/compose2cloud/composescript/envvar/.vncpwdinit) > /home/opc/compose2cloud/composescript/envvar/.vncpwdinit.env
+
+#this variable will be used to set the new DB and Jupyterlab password 
 echo $vncpwd | tee /home/opc/compose2cloud/composescript/envvar/.vncpwd > /dev/null
 echo vncpwd=$(cat /home/opc/compose2cloud/composescript/envvar/.vncpwd) > /home/opc/compose2cloud/composescript/envvar/.vncpwd.env
+
 
 sudo chmod +x /home/opc/compose2cloud/composescript/scripts/alter-pwd.sh
 
