@@ -1,0 +1,13 @@
+[Unit]
+Description=Update Oracle SYSTEM and SYS passwords after podman-compose
+After=podman-compose.service
+Requires=podman-compose.service
+
+[Service]
+Type=oneshot
+EnvironmentFile=/home/opc/compose2cloud/composescript/envvar/.vncpwd.env
+ExecStart=/home/opc/compose2cloud/composescript/scripts/alter-pwd.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target

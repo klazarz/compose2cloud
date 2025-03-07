@@ -1,12 +1,17 @@
 #!/bin/bash
 
-source init/variable.sh
+
 
 #######    S T A R T      S C R I P T    ######
 #######   (this is for Oracle Linux 9)   ######
 
+## load variables (scripts, passwords, etc)
+source init/variable.sh
+
+## update
 sudo dnf update -y
 
+## set firewall rules
 sudo firewall-cmd --permanent --add-port=1521/tcp #Database
 sudo firewall-cmd --permanent --add-port=1522/tcp #Database
 sudo firewall-cmd --permanent --add-port=8888/tcp #JupyterLabs
@@ -29,16 +34,29 @@ sudo dnf install -y container-tools sqlcl jdk21 wget git podman-compose
 #git clone the compose sources to be added
 git clone https://github.com/klazarz/compose2cloud.git
 
-mkdir -p compose2cloud/composescript/oradata
+mkdir -p /home/ops/compose2cloud/composescript/oradata
 
-chmod 777 compose2cloud/composescript/oradata/
-chmod 777 compose2cloud/composescript/ords_secrets/
-chmod 777 compose2cloud/composescript/ords_config/
-chmod 777 compose2cloud/composescript/app/
-chmod 777 compose2cloud/composescript/model/
+chmod 777 /home/opc/compose2cloud/composescript/oradata/
+chmod 777 /home/opc/compose2cloud/composescript/ords_secrets/
+chmod 777 /home/opc/compose2cloud/composescript/ords_config/
+chmod 777 /home/opc/compose2cloud/composescript/app/
+chmod 777 /home/opc/compose2cloud/composescript/model/
+
+echo $vncpwd | tee /home/opc/compose2cloud/composescript/envvar/.vncpwd > /dev/null
+echo vncpwd=$(cat /home/opc/compose2cloud/composescript/envvar/.vncpwd) > /home/opc/compose2cloud/composescript/envvar/.vncpwd.env
+
+sudo chmod +x /home/opc/compose2cloud/composescript/scripts/alter-pwd.sh
 
 sudo cp compose2cloud/composescript/scripts/podman-compose.service /etc/systemd/system/.
+sudo cp compose2cloud/composescript/scripts/alter-pwd.service /etc/systemd/system/.
 
 sudo systemctl daemon-reload
 sudo systemctl enable podman-compose.service
+sudo systemctl enable alter-pwd.service
+
 sudo systemctl start podman-compose.service
+
+
+##TODOS
+#if .env works we need to have a preEec step for the service that recreates the dotenv files
+

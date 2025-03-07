@@ -1,9 +1,16 @@
 import os
 from jupyter_server.auth import passwd
+from dotenv import load_dotenv
 
-# vncpwd = '${vncpwd}'
+load_dotenv(dotenv_path="/home/oracle/.envvar/.vncpwd.env")
 
-hash = passwd("Welcome23ai")
+# vncpwd = "${vncpwd}"
+
+vncpwd = os.getenv("vncpwd")
+
+hash = passwd(vncpwd)
+
+# hash = passwd("Welcome23ai")
 
 # Configuration file for jupyter-notebook.
 

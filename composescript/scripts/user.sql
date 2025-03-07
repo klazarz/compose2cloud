@@ -8,6 +8,18 @@ grant pdb_dba to admin;
 
 grant cdb_dba to admin;
 
+grant resource,connect to admin;
+
+grant soda_app to admin;
+
+
+grant db_developer_role to admin;
+
+grant dv_admin to admin;
+
+grant ords_administrator_role to admin;
+
+
 
 begin
    ords_admin.enable_schema(

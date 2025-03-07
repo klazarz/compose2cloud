@@ -9,8 +9,8 @@ services:
       - ENABLE_FORCE_LOGGING=false
     ports:
       - "1521:1521"
-    volumes:
-      - "./oradata/:/opt/oracle/oradata:Z"
+    # volumes:
+    #   - "./oradata/:/opt/oracle/oradata:Z"
     #   - "./sql/startup/:/opt/oracle/scripts/startup"
     restart: always
   ords:
@@ -48,8 +48,8 @@ services:
     pull_policy: never
     ports:
       - "8888:8888"
-    # volumes:
-    #   - "./jl_config:/home/oracle/.jupyter:Z"
+    volumes:
+      - "./envvar:/home/oracle/.envvar:Z"
     restart: always
   demo:
     build:
