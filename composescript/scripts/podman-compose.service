@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Type=simple
 Restart=always
-RestartSec=10s
+RestartSec=15s
 WorkingDirectory=/home/opc/compose2cloud/composescript
 ExecStart=/usr/local/bin/podman-compose up -d
 ExecStop=/usr/local/bin/podman-compose stop

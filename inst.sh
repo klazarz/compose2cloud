@@ -41,3 +41,4 @@ sudo cp compose2cloud/composescript/scripts/podman-compose.service /etc/systemd/
 
 sudo systemctl daemon-reload
 sudo systemctl enable podman-compose.service
+sudo systemctl start podman-compose.service

@@ -1,6 +1,7 @@
 services:
   database:
     container_name: 23ai
+    hostname: 23ai
     image: container-registry.oracle.com/database/free:latest
     environment:
       - ORACLE_PWD=Welcome23ai
@@ -14,6 +15,7 @@ services:
     restart: always
   ords:
     container_name: ords
+    hostname: ords
     image: container-registry.oracle.com/database/ords-developer:latest
     ports:
       - "8181:8181"
@@ -27,6 +29,7 @@ services:
     restart: always
   ollama:
     container_name: ollama
+    hostname: ollama
     build:
       context: .
       dockerfile: dockerfileollama
@@ -40,6 +43,7 @@ services:
       context: .
       dockerfile: dockerjupyter
     container_name: jupyterlab
+    hostname: livelabs
     image: localhost/composescript_jupyterlab
     pull_policy: never
     ports:
@@ -54,6 +58,7 @@ services:
     pull_policy: never
     image: localhost/composescript_demo
     container_name: demo
+    hostname: app-server
     volumes:
       - "./app:/app:Z"
     ports:
