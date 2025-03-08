@@ -3,9 +3,6 @@
 #######    S T A R T      S C R I P T    ######
 #######   (this is for Oracle Linux 9)   ######
 
-## load variables (scripts, passwords, etc)
-source /home/opc/compose2cloud/init/variable.sh
-
 ## update
 sudo dnf update -y
 
@@ -34,6 +31,9 @@ sudo dnf install -y podman-compose
 
 #git clone the compose sources to be added
 git clone https://github.com/klazarz/compose2cloud.git
+
+## load variables (scripts, passwords, etc)
+source /home/opc/compose2cloud/init/variable.sh
 
 mkdir -p /home/opc/compose2cloud/composescript/oradata
 
