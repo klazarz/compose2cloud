@@ -46,7 +46,7 @@ chmod 777 /home/opc/compose2cloud/composescript/model/
 
 
 #we use this variable to store the initial password - it will be updated with the new password after alter-pwd.service runs
-echo $vncpwdinit | tee /home/opc/compose2cloud/composescript/envvar/.vncpwdinit > /dev/null
+echo $vncpwd | tee /home/opc/compose2cloud/composescript/envvar/.vncpwdinit > /dev/null
 echo vncpwdinit=$(cat /home/opc/compose2cloud/composescript/envvar/.vncpwdinit) > /home/opc/compose2cloud/composescript/envvar/.vncpwdinit.env
 
 #this variable will be used to set the new DB and Jupyterlab password 
