@@ -36,6 +36,7 @@ git clone https://github.com/klazarz/compose2cloud.git
 source /home/opc/compose2cloud/init/variable.sh
 
 mkdir -p /home/opc/compose2cloud/composescript/oradata
+mkdir -p /home/opc/compose2cloud/composescript/envvar/
 
 chmod 777 /home/opc/compose2cloud/composescript/oradata/
 chmod 777 /home/opc/compose2cloud/composescript/ords_secrets/
