@@ -65,7 +65,6 @@ sudo systemctl enable alter-pwd.service
 
 sudo systemctl start podman-compose.service
 
+sudo reboot
 
-##TODOS
-#if .env works we need to have a preEec step for the service that recreates the dotenv files
-
+#######    E N D      S C R I P T    ######
