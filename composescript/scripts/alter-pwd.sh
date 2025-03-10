@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #vncpwd will be reset at boot time
+export vncpwd=Welcome23ai
 echo $vncpwd | tee /home/opc/compose2cloud/composescript/envvar/.vncpwd > /dev/null
 echo vncpwd=$(cat /home/opc/compose2cloud/composescript/envvar/.vncpwd) > /home/opc/compose2cloud/composescript/envvar/.vncpwd.env
 
