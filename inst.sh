@@ -44,6 +44,8 @@ chmod 777 /home/opc/compose2cloud/composescript/ords_config/
 chmod 777 /home/opc/compose2cloud/composescript/app/
 chmod 777 /home/opc/compose2cloud/composescript/model/
 
+cp /home/opc/compose2cloud/composescript/conn_string.txt /home/opc/compose2cloud/composescript/ords_secrets/.
+
 
 #we use this variable to store the initial password - it will be updated with the new password after alter-pwd.service runs
 echo $vncpwd | tee /home/opc/compose2cloud/composescript/envvar/.vncpwdinit > /dev/null
@@ -65,6 +67,5 @@ sudo systemctl enable alter-pwd.service
 
 sudo systemctl start podman-compose.service
 
-sudo reboot
 
 #######    E N D      S C R I P T    ######
