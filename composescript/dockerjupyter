@@ -30,7 +30,8 @@ WORKDIR /home/$NB_USER
 
 # Install JupyterLab and dependencies using the correct Python version
 RUN python3 -m pip install --no-cache-dir --user jupyterlab 
-RUN pip install dotenv
+RUN pip install dotenv jupyterlab-lsp
+RUN pip install 'python-lsp-server[all]'
 
 RUN curl -L -o /tmp/sqlcl-latest.zip https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip && \
     unzip /tmp/sqlcl-latest.zip -d /home/oracle/.local/. && \
