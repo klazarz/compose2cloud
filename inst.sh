@@ -29,6 +29,9 @@ sudo dnf config-manager --enable ol9_developer_EPEL
 sudo dnf install -y container-tools sqlcl jdk21 wget git 
 sudo dnf install -y podman-compose
 
+sudo loginctl enable-linger opc
+
+
 #git clone the compose sources to be added
 git clone https://github.com/klazarz/compose2cloud.git
 
@@ -37,6 +40,8 @@ source /home/opc/compose2cloud/init/variable.sh
 
 mkdir -p /home/opc/compose2cloud/composescript/oradata
 mkdir -p /home/opc/compose2cloud/composescript/envvar
+mkdir -p /home/opc/.config/systemd/user
+
 
 chmod 777 /home/opc/compose2cloud/composescript/oradata/
 chmod 777 /home/opc/compose2cloud/composescript/ords_secrets/
@@ -55,17 +60,19 @@ echo vncpwdinit=$(cat /home/opc/compose2cloud/composescript/envvar/.vncpwdinit) 
 echo $vncpwd | tee /home/opc/compose2cloud/composescript/envvar/.vncpwd > /dev/null
 echo vncpwd=$(cat /home/opc/compose2cloud/composescript/envvar/.vncpwd) > /home/opc/compose2cloud/composescript/envvar/.vncpwd.env
 
+sudo podman-compose -f /home/opc/compose2cloud/composescript/compose.yml up 
 
 sudo chmod +x /home/opc/compose2cloud/composescript/scripts/alter-pwd.sh
 
-sudo cp compose2cloud/composescript/scripts/podman-compose.service /etc/systemd/system/.
-sudo cp compose2cloud/composescript/scripts/alter-pwd.service /etc/systemd/system/.
+sudo cp /home/opc/ompose2cloud/composescript/scripts/user-podman.service /home/opc/.config/systemd/user/.
+#sudo cp /home/opc/compose2cloud/composescript/scripts/podman-compose.service /etc/systemd/system/.
+#sudo cp /home/opc/compose2cloud/composescript/scripts/alter-pwd.service /etc/systemd/system/.
 
 sudo systemctl daemon-reload
 sudo systemctl enable podman-compose.service
 sudo systemctl enable alter-pwd.service
 
-sudo systemctl start podman-compose.service
+
 
 
 #######    E N D      S C R I P T    ######
